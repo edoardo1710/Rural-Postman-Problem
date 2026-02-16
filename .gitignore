@@ -1,0 +1,11 @@
+# Escludi l'eseguibile finale
+test
+test.exe
+
+# Escludi file temporanei di sistema
+.DS_Store
+Thumbs.db
+
+# Escludi configurazioni locali dell'editor
+.vscode/
+.idea/
