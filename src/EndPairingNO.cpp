@@ -27,7 +27,7 @@ void endPairingNO(int u) {
         // Rimuovi l'arco dal grafo per segnarlo come visitato
         adj[u].pop_back();
 
-        // Se questo arco (identificato dal suo ID) è già stato percorso
+        // Se questo arco (identificato dal suo ID) ï¿½ giï¿½ stato percorso
         // (magari venendo dall'altra direzione), lo saltiamo.
         if (archi_visitati[next.id]) {
             continue;
@@ -37,12 +37,12 @@ void endPairingNO(int u) {
         archi_visitati[next.id] = true;
 
         // Ricorsione
-        endPairing(next.destinazione);
+        endPairingNO(next.destinazione);
 
         //Backtracking
         total_cost += next.peso;
     }
 
-    // Quando il nodo non ha più archi uscenti, lo aggiungiamo al circuito.
+    // Quando il nodo non ha piï¿½ archi uscenti, lo aggiungiamo al circuito.
     circuito.push_back(u);
 }

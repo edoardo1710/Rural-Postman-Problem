@@ -26,13 +26,13 @@ void endPairingO(int u) {
         adj[u].pop_back();
 
         // Ricorsione
-        endPairing(next.destinazione);
+        endPairingO(next.destinazione);
 
         //Backtracking
         total_cost += next.peso;
     }
 
-    // Quando il nodo non ha più archi uscenti, lo aggiungiamo al circuito.
+    // Quando il nodo non ha piï¿½ archi uscenti, lo aggiungiamo al circuito.
     circuito.push_back(u);
 }
 

@@ -7,6 +7,7 @@ Codice algoritmo di Djikstra
 #include <vector>
 #include <queue>
 #include <limits>
+#include <utility>
 
 using namespace std;
 
@@ -30,7 +31,7 @@ struct Nodo {
     }
 };
 
-vector<long long> dijkstra(int sorgente, const vector<vector<Arco>>& adj) {
+pair<vector<long long>, vector<int>> dijkstra(int sorgente, const vector<vector<Arco>>& adj) {
 
     // n = |V|, numero di nodi nel grafo
     int n = adj.size();
@@ -71,5 +72,5 @@ vector<long long> dijkstra(int sorgente, const vector<vector<Arco>>& adj) {
     }
 
     // Ritorno il vettore delle distanze
-    return dist;
+    return {dist, parent};
 }
