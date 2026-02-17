@@ -16,7 +16,7 @@ int main() {
 
     // 2. Controllo Connessione (connessione.cpp)
     // Verifica se il grafo formato dagli archi obbligatori è connesso
-    if (!controllaConnessione(archi_obbligatori)) {
+    if (!connectComponentsZ3(5, [])) {
         cout << "Il grafo degli archi obbligatori non è connesso. "
              << "Utilizzo Dijkstra per trovare i collegamenti minimi..." << endl;
         // Chiamate a funzioni in connessione.cpp per aggiungere archi di collegamento

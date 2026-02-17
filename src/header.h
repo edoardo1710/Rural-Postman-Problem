@@ -42,7 +42,7 @@ struct Circuit {
 std::pair<std::vector<long long>, std::vector<int>> dijkstra(int sorgente, const std::vector<std::vector<Arco>>& adj);
 
 // Algoritmo per collegamento circuiti
-std::vector<std::vector<long long>> connection(const std::vector<Circuit>& isole, const std::vector<std::vector<Arco>>& adj);
+std::vector<std::vector<Arco>> connectComponentsZ3(int N, std::vector<std::vector<Arco>> adj, const std::vector<Circuit>& isole);
 
 // Algoritmo per il pairing per grafi orientati
 void endPairingO(int u);
