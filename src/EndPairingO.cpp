@@ -32,8 +32,9 @@ void endPairingO(int u) {
         total_cost += next.peso;
     }
 
-    // Quando il nodo non ha pi� archi uscenti, lo aggiungiamo al circuito.
+    // Quando il nodo non ha più archi uscenti, lo aggiungiamo al circuito.
     circuito.push_back(u);
 }
+
 
 
