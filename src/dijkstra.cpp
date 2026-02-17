@@ -3,6 +3,7 @@ Codice algoritmo di Djikstra
 */
 
 // Librerie
+#include "header.h"
 #include <iostream>
 #include <vector>
 #include <queue>
