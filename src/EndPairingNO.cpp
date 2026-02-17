@@ -2,15 +2,10 @@
 #include <vector>
 #include <algorithm>
 #include <map>
+#include "header.h"
 
 using namespace std;
 
-// Struttura per rappresentare un arco con peso
-struct Arco {
-    int destinazione;
-    int peso;
-    int id; //ID arco
-};
 
 // Mappa di adiacenza: adj[u] contiene una lista di {v, peso}
 vector<vector<Arco>> adj;
@@ -46,3 +41,4 @@ void endPairingNO(int u) {
     // Quando il nodo non ha pi� archi uscenti, lo aggiungiamo al circuito.
     circuito.push_back(u);
 }
+
