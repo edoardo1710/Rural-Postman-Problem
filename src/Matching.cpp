@@ -3,25 +3,9 @@
 #include <algorithm>
 #include <cmath>
 #include <limits>
-#include "dijkstra.h"
+#include "header.h"
 
 using namespace std;
-
-const long long INF = numeric_limits<long long>::max();
-
-struct Arco{
- int destinazione;
- int peso;
- int id;
- };
-
- struct Nodo {
-    long long distanza_corrente;
-    int id_nodo;
-    bool operator>(const Nodo& other) const {
-        return distanza_corrente > other.distanza_corrente;
-    }
-};
 
 vector<vector<Arco>> matching(int N, vector<vector<Arco>> adj) {
 

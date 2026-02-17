@@ -2,7 +2,7 @@
 #include <vector>
 #include <cassert>
 #include <limits>
-#include "dijkstra.h"
+#include "header.h"
 
 void test_percorso_semplice() {
     std::vector<std::vector<Arco>> grafo(3);
