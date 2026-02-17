@@ -1,6 +1,6 @@
 //Codice per matching ottimo//
 
-#include "eulero.h"
+#include "header.h"
 #include <z3++.h>
 #include <string>
 
@@ -13,7 +13,7 @@ vector<vector<Arco>> MatchingOttimo(int N, vector<vector<Arco>> adj) {
     vector<int> nodi_dispari;
     for (int i = 0; i < N; i++) {
         // In un grafo non orientato, ci interessa solo il grado totale.
-        // Se il numero di archi collegati a questo nodo è dispari, va sistemato.
+        // Se il numero di archi collegati a questo nodo Ã¨ dispari, va sistemato.
         if (adj[i].size() % 2 != 0) {
             nodi_dispari.push_back(i);
         }
@@ -53,7 +53,7 @@ vector<vector<Arco>> MatchingOttimo(int N, vector<vector<Arco>> adj) {
     for (int i = 0; i < K; ++i) {
         vector<expr> riga;
         for (int j = 0; j < K; ++j) {
-            //ariabili che z3 dovrà "indovinare".
+            //ariabili che z3 dovrÃ  "indovinare".
             string name = "x_" + to_string(i) + "_" + to_string(j);
             riga.push_back(c.int_const(name.c_str()));
 
@@ -61,7 +61,7 @@ vector<vector<Arco>> MatchingOttimo(int N, vector<vector<Arco>> adj) {
             opt.add(riga.back() >= 0 && riga.back() <= 1);
 
             // Vincolo: (i non si accoppia con i)
-            // Vincolo: Se la distanza è INF (irraggiungibile), non accoppiare
+            // Vincolo: Se la distanza Ã¨ INF (irraggiungibile), non accoppiare
             if (i == j || distanze_matrice[i][j] == INF) {
                 opt.add(riga.back() == 0);
             }
@@ -106,7 +106,7 @@ vector<vector<Arco>> MatchingOttimo(int N, vector<vector<Arco>> adj) {
         cout << "Matching ottimo trovato." << endl;
         model m = opt.get_model();
 
-        // Iteriamo solo sulla metà superiore della matrice per non processare le coppie due volte
+        // Iteriamo solo sulla metÃ  superiore della matrice per non processare le coppie due volte
         for (int i = 0; i < K; ++i) {
             for (int j = i + 1; j < K; ++j) {
 
@@ -152,3 +152,4 @@ vector<vector<Arco>> MatchingOttimo(int N, vector<vector<Arco>> adj) {
 
     return adj;
 }
+
