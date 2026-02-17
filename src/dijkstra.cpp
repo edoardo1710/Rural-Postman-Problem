@@ -12,25 +12,6 @@ Codice algoritmo di Djikstra
 
 using namespace std;
 
-// Definizione valore infinito per l'inizializzazione del vettore contenente le distanze
-const long long INF = numeric_limits<long long>::max();
-
-// Struttura per rappresentare un arco
-struct Arco {
-    int destinazione;
-    int peso;
-};
-
-// Struttura per la coda di priorità
-struct Nodo {
-    long long distanza_corrente;
-    int id_nodo;
-
-    // Definzione del metodo su come confrontare due nodi
-    bool operator>(const Nodo& other) const {
-        return distanza_corrente > other.distanza_corrente;
-    }
-};
 
 pair<vector<long long>, vector<int>> dijkstra(int sorgente, const vector<vector<Arco>>& adj) {
 
