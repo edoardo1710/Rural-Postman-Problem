@@ -1,7 +1,7 @@
 //Codice per matching ottimo//
 
 #include "header.h"
-#include <z3++.h>
+#include "z3++.h"
 #include <string>
 
 using namespace std;
@@ -12,9 +12,11 @@ vector<vector<Arco>> MatchingOttimo(int N, vector<vector<Arco>> adj) {
 
     vector<int> nodi_dispari;
     for (int i = 0; i < N; i++) {
-        // In un grafo non orientato, ci interessa solo il grado totale.
-        // Se il numero di archi collegati a questo nodo è dispari, va sistemato.
-        if (adj[i].size() % 2 != 0) {
+        int grado_necessario = 0;
+        for(const auto& a : adj[i]) {
+            if(a.necessario) grado_necessario++; // Conta solo quelli veri!
+        }
+        if (grado_necessario % 2 != 0) {
             nodi_dispari.push_back(i);
         }
     }

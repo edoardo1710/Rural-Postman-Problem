@@ -2,6 +2,7 @@
 File Header
 */
 
+
 #pragma once
 #include <iostream>
 #include <limits>
@@ -49,3 +50,6 @@ void endPairingO(int u);
 
 // Algoritmo per il pairing per grafi non orientati
 void endPairingNO(int u);
+
+// Algoritmo matching
+std::vector<std::vector<Arco>> MatchingOttimo(int N, std::vector<std::vector<Arco>> adj);
