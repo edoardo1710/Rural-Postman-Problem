@@ -13,7 +13,7 @@ long long total_cost = 0;
 
 void endPairingO(int u) {
     while (!adj[u].empty()) {
-        // Prendi l'ultimo arco inserito (LIFO )
+        // Prendi l'ultimo arco inserito (LIFO)
         Arco next= adj[u].back();
 
         // Rimuovi l'arco dal grafo per segnarlo come visitato

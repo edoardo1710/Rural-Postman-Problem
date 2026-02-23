@@ -12,7 +12,6 @@ Codice algoritmo di Djikstra
 
 using namespace std;
 
-
 pair<vector<long long>, vector<int>> dijkstra(int sorgente, const vector<vector<Arco>>& adj) {
 
     // n = |V|, numero di nodi nel grafo
@@ -53,6 +52,6 @@ pair<vector<long long>, vector<int>> dijkstra(int sorgente, const vector<vector<
 
     }
 
-    // Ritorno il vettore delle distanze
+    // Ritorno il vettore delle distanze e dei predecessori
     return {dist, parent};
 }

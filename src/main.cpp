@@ -1,35 +1,54 @@
+/*
+Main file
+*/
+
+// Librerie
 #include <iostream>
 #include <vector>
+#include <string>
 #include "header.h"
 
 using namespace std;
 
-// --- VARIABILI GLOBALI (Necessarie per EndPairingNO.cpp) ---
-// Queste variabili sono definite negli altri file .cpp, qui le colleghiamo
 extern vector<vector<Arco>> adj; 
 extern vector<int> circuito;
 extern vector<bool> archi_visitati;
-extern long long total_cost; // Se presente in EndPairingNO
+extern long long total_cost;
 
-// --- FUNZIONI AUSILIARIE PER IL MAIN ---
+std::string rosso = "\033[31m";
+std::string reset = "\033[0m";
 
-// DFS per trovare le componenti connesse (le "zone" o "isole")
+
+// DFS per trovare le componenti connesse
 void DFS_FindIslands(int u, vector<bool>& visited, vector<int>& component_nodes, const vector<vector<Arco>>& grafo) {
     visited[u] = true;
     component_nodes.push_back(u);
 
     for (const auto& arco : grafo[u]) {
-        // Navighiamo solo sugli archi NECESSARI per identificare le isole
+        // Navighiamo solo sugli archi necessari per identificare le isole
         if (arco.necessario && !visited[arco.destinazione]) {
             DFS_FindIslands(arco.destinazione, visited, component_nodes, grafo);
         }
     }
 }
 
-int main() {
+// Funzione per la pulizia dello schermo
+void clearScreen() {
+#ifdef _WIN32
+    system("cls");
+#else
+    // Codice ANSI per pulire lo schermo su Linux/macOS
+    std::cout << "\033[2J\033[1;1H";
+#endif
+}
+
+int main(void) {
+
+    clearScreen();
+
     int N, M;
     cout << "Inserisci numero di Nodi (N) e Archi (M): ";
-    if (!(cin >> N >> M)) return 0;
+    if (!(cin >> N >> M)) return 1;
 
     // Grafo locale per le manipolazioni iniziali
     vector<vector<Arco>> grafo_locale(N);
@@ -53,7 +72,8 @@ int main() {
     // -----------------------------------------------------------
     // FASE 1: Identificazione delle Componenti (Zone Sconnesse)
     // -----------------------------------------------------------
-    cout << "\n--- FASE 1: Identificazione Isole (Zone) ---" << endl;
+    std::cout << rosso << "\nFase 1: Identificazione delle Componenti" << reset << std::endl;
+
     vector<Circuit> isole;
     vector<bool> visited(N, false);
     int island_count = 0;
@@ -80,25 +100,27 @@ int main() {
     // -----------------------------------------------------------
     // FASE 2: Connessione delle Componenti (MST con Z3)
     // -----------------------------------------------------------
-    cout << "\n--- FASE 2: Connessione Isole (Z3) ---" << endl;
+    std::cout << rosso << "\nFase 2: Connessione delle Componenti" << reset << std::endl;
+
     // Questa funzione (dal tuo file connessione.cpp) aggiungerà ponti required
     grafo_locale = connectComponentsZ3(N, grafo_locale, isole);
 
     // -----------------------------------------------------------
     // FASE 3: Matching Ottimo (Parità con Z3)
     // -----------------------------------------------------------
-    cout << "\n--- FASE 3: Matching Ottimo (Z3) ---" << endl;
+    std::cout << rosso << "\nFase 3: Matching Ottimo" << reset << std::endl;
+
     // Questa funzione (dal tuo file MatchingOttimo.cpp) renderà il grafo Euleriano
     grafo_locale = MatchingOttimo(N, grafo_locale);
 
     // -----------------------------------------------------------
     // FASE 4: Trova il Circuito Euleriano (Hierholzer)
     // -----------------------------------------------------------
-    cout << "\n--- FASE 4: Calcolo Circuito Finale ---" << endl;
+    std::cout << rosso << "\nFase 4: Individuazione del Circuito Euleriano" << reset << std::endl;
 
     adj = grafo_locale; 
     circuito.clear();
-    total_cost = 0; // Resettiamo sempre il costo per sicurezza!
+    total_cost = 0;
 
     // NUOVA ASSEGNAZIONE ID: Diamo lo stesso ID all'andata e al ritorno dei nuovi ponti
     int current_id = max_id + 1; 
@@ -134,7 +156,8 @@ int main() {
     // -----------------------------------------------------------
     // OUTPUT FINALE
     // -----------------------------------------------------------
-    cout << "\n=== RISULTATO ===" << endl;
+    std::cout << rosso << "\n=== RISULTATO ===" << reset << endl;
+
     cout << "Percorso: ";
     // Il circuito è in ordine inverso (o corretto a seconda dell'implementazione), lo stampiamo
     for (size_t i = 0; i < circuito.size(); ++i) {

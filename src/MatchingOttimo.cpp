@@ -1,5 +1,8 @@
-//Codice per matching ottimo//
+/*
+Algoritmo per Matching ottimo
+*/
 
+// Librerie
 #include "header.h"
 #include "z3++.h"
 #include <string>
@@ -7,14 +10,15 @@
 using namespace std;
 using namespace z3;
 
-
 vector<vector<Arco>> MatchingOttimo(int N, vector<vector<Arco>> adj) {
 
     vector<int> nodi_dispari;
+
     for (int i = 0; i < N; i++) {
+
         int grado_necessario = 0;
         for(const auto& a : adj[i]) {
-            if(a.necessario) grado_necessario++; // Conta solo quelli veri!
+            if(a.necessario) grado_necessario++;
         }
         if (grado_necessario % 2 != 0) {
             nodi_dispari.push_back(i);
@@ -33,6 +37,7 @@ vector<vector<Arco>> MatchingOttimo(int N, vector<vector<Arco>> adj) {
     vector<vector<int>> padri_matrice(K);
 
     for (int i = 0; i < K; i++) {
+
         // Lanciamo Dijkstra dal nodo dispari nodidispari[i]
         pair<vector<long long>, vector<int>> result = dijkstra(nodi_dispari[i], adj);
 
@@ -43,7 +48,7 @@ vector<vector<Arco>> MatchingOttimo(int N, vector<vector<Arco>> adj) {
         }
     }
 
-    //IMPLEMENTAZIONE Z3 (Constraint Programming)
+    // Implementazione Z3 (Constraint Programming)
     context c;
     optimize opt(c);
 
@@ -53,16 +58,18 @@ vector<vector<Arco>> MatchingOttimo(int N, vector<vector<Arco>> adj) {
 
     // Creazione variabili e vincoli base
     for (int i = 0; i < K; ++i) {
+
         vector<expr> riga;
+
         for (int j = 0; j < K; ++j) {
-            //ariabili che z3 dovrà "indovinare".
+
+            // Variabili che z3 dovrà "indovinare".
             string name = "x_" + to_string(i) + "_" + to_string(j);
             riga.push_back(c.int_const(name.c_str()));
 
             // Vincolo: Binario (0 o 1)
             opt.add(riga.back() >= 0 && riga.back() <= 1);
 
-            // Vincolo: (i non si accoppia con i)
             // Vincolo: Se la distanza è INF (irraggiungibile), non accoppiare
             if (i == j || distanze_matrice[i][j] == INF) {
                 opt.add(riga.back() == 0);
@@ -78,10 +85,11 @@ vector<vector<Arco>> MatchingOttimo(int N, vector<vector<Arco>> adj) {
         }
     }
 
-    // Vincolo: Perfect Matching
-    // Ogni nodo i deve essere collegato a ESATTAMENTE un altro nodo j
+    // Ogni nodo i deve essere collegato a esattamente un altro nodo j
     for (int i = 0; i < K; ++i) {
+
         expr somma_riga = c.int_val(0);
+
         for (int j = 0; j < K; ++j) {
             if (i != j) {
                 somma_riga = somma_riga + x[i][j];
@@ -90,9 +98,11 @@ vector<vector<Arco>> MatchingOttimo(int N, vector<vector<Arco>> adj) {
         opt.add(somma_riga == 1);
     }
 
-    // Funzione Obiettivo: Minimizzare il costo totale
+    // Minimizzazione del costo totale
     expr costo_totale = c.int_val(0);
+
     for (int i = 0; i < K; ++i) {
+
         for (int j = i + 1; j < K; ++j) {
             if (distanze_matrice[i][j] < INF) {
                 // Aggiungiamo al costo totale: variabile * distanza
@@ -101,10 +111,11 @@ vector<vector<Arco>> MatchingOttimo(int N, vector<vector<Arco>> adj) {
         }
     }
 
-   //z3 minimizza costo_totale
+   // Z3 minimizza costo_totale
     opt.minimize(costo_totale);
 
     if (opt.check() == sat) {
+
         cout << "Matching ottimo trovato." << endl;
         model m = opt.get_model();
 
@@ -138,8 +149,7 @@ vector<vector<Arco>> MatchingOttimo(int N, vector<vector<Arco>> adj) {
                             }
                         }
 
-                        // AGGIUNTA ARCO (Duplicazione)
-
+                        // Duplicazione arco
                         adj[precedente].push_back({attuale, weight, -1, true});
                         adj[attuale].push_back({precedente, weight, -1, true});
 
@@ -152,6 +162,7 @@ vector<vector<Arco>> MatchingOttimo(int N, vector<vector<Arco>> adj) {
         cout << "ERRORE CRITICO: Z3 non ha trovato soluzione (Grafo sconnesso?)." << endl;
     }
 
+    // Ritorna il grafo
     return adj;
 }
 
