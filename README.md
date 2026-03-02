@@ -8,7 +8,6 @@ Il progetto è in fase di sviluppo come elaborato finale per l'esame del corso d
 * **Giacomin Paolo**
 
 ## Introduzione e Definizione del Problema
-### Cos'è il Rural Postman Problem
 
 Per capire meglio il Rural Postman Problem bisogna innanzitutto introdurre il **Chinese Postman Problem**.
 
