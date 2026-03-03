@@ -44,3 +44,31 @@ La differenza fondamentale tra il Chinese Postman Problem e il Rural Postman Pro
 - nel Chinese Postman Problem se il grafo è già euleriano basta sommare il peso di ogni arco, mentre se non è euleriano basta applicare il Matching Ottimo, che ha complessità polinomiale. Poiché il matching ottimo si risolve in tempo polinomiale, l'intero problema è polinomiale.
 
 - nel Rural Postman Problem, oltre al Matching Ottimo, bisogna anche connettere tra di loro le componenti isolate del grafo. Se immaginiamo che ogni componente connessa di $R$ sia un singolo "super-nodo", connetterli con il costo minimo per formare un ciclo è strutturalmente identico a risolvere il **Problema del Commesso Viaggiatore**, che è notoriamente NP-Hard.
+
+ ## Approccio algoritmico
+
+ ### Algoritmo di Dijkstra
+
+ Il file ```dijkstra.cpp``` contiene l'implementazione dell'algoritmo di Dijkstra. 
+
+ Vengono inizializzati due vettori, ```dist``` e ```parent```, che conterranno rispettivamente le distanze di ciascun nodo dalla sorgente e il predecessore di ciascun nodo all'interno dell cammino minimo. Per analizzare i nodi da esplorare viene utilizzata una **min-heap**, in modo tale da rendere la complessità dell'algoritmo $O\left((V+E) \cdot \log(V)\right)$.
+
+ ### Algoritmo di connessione
+
+ Il file ```connessione.cpp``` contiene l'implementazione di un algoritmo per connettere diverse componenti connesse di un grafo cercando di minimizzare il costo totale dei collegamenti tramite Z3.
+
+ Inizialmente vengono individuate le componenti, che verranno trattate come dei "super-nodi", dopodiché viene riempita una matrice ```macro_grafo[K][K]``` che contiene la distanza minima tra l'isola $i$ e l'isola $j$. Contemporaneamente, ```best_bridge``` salva quali sono i due nodi reali che permettono quel collegamento minimo.
+
+ Z3 viene inizializzato in questo modo:
+
+ - **Variabili decisionali ```vector<vector<expr>> x, f```**: $x_{i, j}, booleana che indica se il collegamento tra l'isola $i$ e l'isola $j$ viene attivato, e $f_{i, j}$, che funge da variabile di supporto per capire se le componenti sono connesse.
+
+ - **Vincoli**: conservazione del flusso, garantisce che non esistano isole isolate o cicli separati, simmetria, per grafi non orientati, e costo, che viene minimizzato
+
+Successivamente, si identificano quali $x_{i,j}$ sono stati impostati a $1$ dal modello e viene ricostruito il cammino tramite il vettore dei predecessori fornito da Dijkstra
+
+ ### Algoritmo di EndPairing
+
+ Il file ```EndPairing.cpp``` contiene l'implementazione dell'**Algoritmo di Hierholzer** per l'EndPairing. 
+
+
