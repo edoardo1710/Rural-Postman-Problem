@@ -70,5 +70,7 @@ Successivamente, si identificano quali $x_{i,j}$ sono stati impostati a $1$ dal 
  ### Algoritmo di EndPairing
 
  Il file ```EndPairing.cpp``` contiene l'implementazione dell'**Algoritmo di Hierholzer** per l'EndPairing. 
+ L'algoritmo di Hierholzer è estremamente efficiente perché "tocca" ogni nodo e ogni arco una sola volta durante la costruzione del circuito.
+ Ha complessità computazionale pari a $O(E+V)$.
 
 
