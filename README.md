@@ -69,7 +69,17 @@ Successivamente, si identificano quali $x_{i,j}$ sono stati impostati a $1$ dal 
 
  ### Algoritmo per il Matching Ottimo
 
- Il file 
+ Il file ```matchingOttimo.cpp``` contiene l'implementazione di un algoritmo per effettuare il Matching Ottimo tramite Z3.
+
+ Inizialmente, l'algoritmo identifica i nodi dispari e dopodiché viene calcolata la distanza tra qualsiasi coppia di nodi dispari tramite l'algoritmo di Dijkstra.
+
+  Z3 viene inizializzato in questo modo:
+
+   - **Variabile decisionale ```vector<vector<expr>> x```**: $x_{i, j}$, booleana, che se uguale a $1$ indica che il nodo dispari $i$ è accoppiato con il nodo dispari $j$.
+
+   - **Vincoli**: ogni nodo deve essere accoppiato con esattamente un altro nodo dispari e Z3 cerca la combinazione di coppie che minimizza la somma dei pesi.
+
+ Dopo aver deciso le coppie di nodi migliori il codice recupera il cammino minimo reale tra i due nodi usando ```padri_matrice``` e per ogni arco che compone quel cammino, viene aggiunta una copia dell'arco nella lista di adiacenza ```adj```, marcato come necessario.
  
  ### Algoritmo di EndPairing
 
