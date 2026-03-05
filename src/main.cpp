@@ -102,7 +102,7 @@ int main(void) {
     // -----------------------------------------------------------
     std::cout << rosso << "\nFase 2: Connessione delle Componenti" << reset << std::endl;
 
-    // Questa funzione (dal tuo file connessione.cpp) aggiungerà ponti required
+    // Questa funzione aggiungerà ponti required
     grafo_locale = connectComponentsZ3(N, grafo_locale, isole);
 
     // -----------------------------------------------------------
@@ -169,3 +169,4 @@ int main(void) {
 
     return 0;
 }
+
