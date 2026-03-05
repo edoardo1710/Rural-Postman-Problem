@@ -1,6 +1,8 @@
 # Rural Postman Problem (C++) 📮
 Questo repository contiene l'implementazione in C++ di un risolutore per il **Rural Postman Problem (RPP)**.
 
+Il link alla presentazione:https://www.canva.com/design/DAHCzxQzqbc/lEXJ9gCf1VzQlNVFS3Wy3w/edit?utm_content=DAHCzxQzqbc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
 Il progetto è in fase di sviluppo come elaborato finale per l'esame del corso di "**Computabilità, Complessità e Logica**" presso l'Università degli Studi di Trieste.
 
 ## 👥 Autori
