@@ -10,7 +10,7 @@ arco(c, a, 7).
 
 ppc(NodoIniziale,Cammino,CostoTotale):-  
  findall(arco(X,Y,W),arco(X,Y,W),Archi),  
- cammina(NodoIniziale,NodoIniziale,Archi,Cammino,0,CostoTotale),!.
+ cammina(NodoIniziale,NodoIniziale,Archi,Cammino,0,CostoTotale),!. 
  
 cammina(NodoCorrente,NodoCorrente, [], [NodoCorrente], CostoAccumulativo, CostoAccumulativo).
 
