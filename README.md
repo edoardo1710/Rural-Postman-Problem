@@ -61,12 +61,16 @@ La differenza fondamentale tra il Chinese Postman Problem e il Rural Postman Pro
 
  Z3 viene inizializzato in questo modo:
 
- - **Variabili decisionali ```vector<vector<expr>> x, f```**: $x_{i, j}, booleana che indica se il collegamento tra l'isola $i$ e l'isola $j$ viene attivato, e $f_{i, j}$, che funge da variabile di supporto per capire se le componenti sono connesse.
+ - **Variabili decisionali ```vector<vector<expr>> x, f```**: $x_{i, j}$, booleana che indica se il collegamento tra l'isola $i$ e l'isola $j$ viene attivato, e $f_{i, j}$, che funge da variabile di supporto per capire se le componenti sono connesse.
 
  - **Vincoli**: conservazione del flusso, garantisce che non esistano isole isolate o cicli separati, simmetria, per grafi non orientati, e costo, che viene minimizzato
 
 Successivamente, si identificano quali $x_{i,j}$ sono stati impostati a $1$ dal modello e viene ricostruito il cammino tramite il vettore dei predecessori fornito da Dijkstra
 
+ ### Algoritmo per il Matching Ottimo
+
+ Il file 
+ 
  ### Algoritmo di EndPairing
 
  Il file ```EndPairing.cpp``` contiene l'implementazione dell'**Algoritmo di Hierholzer** per l'EndPairing. 
