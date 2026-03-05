@@ -105,3 +105,7 @@ La complessità temporale è $O\left(V+E\right)$ e quella spaziale è $O\left(V+
 
 Per la risoluzione delle problematiche di ottimizzazione vincolata (come il Matching Ottimo e la connessione delle componenti), il progetto adotta la libreria esterna **Z3 Theorem Prover** di Microsoft Research. Tutte le definizioni delle strutture dati e le firme delle funzioni sono centralizzate nel file ```header.h```. La compilazione del sistema è gestita tramite un Makefile dedicato: utilizzando il comando ```make postino.o```, verrà generato l'eseguibile a partire dal file ```main.cpp```, garantendo un processo di build rapido e riproducibile.
 
+## Riferimenti bibliografici
+
+- Hillier & Lieberman - *Ricerca operativa*, ottava edizione, McGraw-Hill
+
