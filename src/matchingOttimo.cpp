@@ -30,20 +30,20 @@ vector<vector<Arco>> MatchingOttimo(int N, vector<vector<Arco>> adj) {
         return adj;
     }
 
-    int K = nodi_dispari.size();
-    cout << "Trovati " << K << " nodi dispari. Calcolo percorsi minimi e avvio Z3..." << endl;
+    int D = nodi_dispari.size();
+    cout << "Trovati " << D << " nodi dispari. Calcolo percorsi minimi e avvio Z3..." << endl;
 
-    vector<vector<long long>> distanze_matrice(K, vector<long long>(K));
-    vector<vector<int>> padri_matrice(K);
+    vector<vector<long long>> distanze_matrice(D, vector<long long>(D));
+    vector<vector<int>> padri_matrice(D);
 
-    for (int i = 0; i < K; i++) {
+    for (int i = 0; i < D; i++) {
 
         // Lanciamo Dijkstra dal nodo dispari nodidispari[i]
         pair<vector<long long>, vector<int>> result = dijkstra(nodi_dispari[i], adj);
 
         padri_matrice[i] = result.second; // Salviamo i padri
 
-        for (int j = 0; j < K; j++) {
+        for (int j = 0; j < D; j++) {
             distanze_matrice[i][j] = result.first[nodi_dispari[j]];
         }
     }
@@ -57,11 +57,11 @@ vector<vector<Arco>> MatchingOttimo(int N, vector<vector<Arco>> adj) {
     vector<vector<expr>> x;
 
     // Creazione variabili e vincoli base
-    for (int i = 0; i < K; ++i) {
+    for (int i = 0; i < D; ++i) {
 
         vector<expr> riga;
 
-        for (int j = 0; j < K; ++j) {
+        for (int j = 0; j < D; ++j) {
 
             // Variabili che z3 dovrà "indovinare".
             string name = "x_" + to_string(i) + "_" + to_string(j);
@@ -79,18 +79,18 @@ vector<vector<Arco>> MatchingOttimo(int N, vector<vector<Arco>> adj) {
     }
 
     // Vincolo: Simmetria (x_ij == x_ji)
-    for (int i = 0; i < K; ++i) {
-        for (int j = i + 1; j < K; ++j) {
+    for (int i = 0; i < D; ++i) {
+        for (int j = i + 1; j < D; ++j) {
             opt.add(x[i][j] == x[j][i]);
         }
     }
 
     // Ogni nodo i deve essere collegato a esattamente un altro nodo j
-    for (int i = 0; i < K; ++i) {
+    for (int i = 0; i < D; ++i) {
 
         expr somma_riga = c.int_val(0);
 
-        for (int j = 0; j < K; ++j) {
+        for (int j = 0; j < D; ++j) {
             if (i != j) {
                 somma_riga = somma_riga + x[i][j];
             }
@@ -101,9 +101,9 @@ vector<vector<Arco>> MatchingOttimo(int N, vector<vector<Arco>> adj) {
     // Minimizzazione del costo totale
     expr costo_totale = c.int_val(0);
 
-    for (int i = 0; i < K; ++i) {
+    for (int i = 0; i < D; ++i) {
 
-        for (int j = i + 1; j < K; ++j) {
+        for (int j = i + 1; j < D; ++j) {
             if (distanze_matrice[i][j] < INF) {
                 // Aggiungiamo al costo totale: variabile * distanza
                 costo_totale = costo_totale + (x[i][j] * (int)distanze_matrice[i][j]);
@@ -120,8 +120,8 @@ vector<vector<Arco>> MatchingOttimo(int N, vector<vector<Arco>> adj) {
         model m = opt.get_model();
 
         // Iteriamo solo sulla metà superiore della matrice per non processare le coppie due volte
-        for (int i = 0; i < K; ++i) {
-            for (int j = i + 1; j < K; ++j) {
+        for (int i = 0; i < D; ++i) {
+            for (int j = i + 1; j < D; ++j) {
 
                 // Se Z3 ha impostato x[i][j] a 1
                 if (m.eval(x[i][j]).get_numeral_int() == 1) {
@@ -165,4 +165,5 @@ vector<vector<Arco>> MatchingOttimo(int N, vector<vector<Arco>> adj) {
     // Ritorna il grafo
     return adj;
 }
+
 
