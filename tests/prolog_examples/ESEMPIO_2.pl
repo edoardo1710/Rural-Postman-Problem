@@ -1,4 +1,4 @@
-/*ESEMPIO 3
+/*ESEMPIO 2
 DATA BASE*/
 arco(a, b, 0).
 arco(a, b, 0).
@@ -23,4 +23,5 @@ cammina(NodoAttuale,NodoCorrente, ArchiDisponibili, [NodoAttuale|CamminoRestante
 connesso(X,arco(X,Y,W),Y,W).
 
 connesso(X,arco(Y,X,W),Y,W).
+
 
