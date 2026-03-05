@@ -65,7 +65,9 @@ La differenza fondamentale tra il Chinese Postman Problem e il Rural Postman Pro
 
  - **Vincoli**: conservazione del flusso, garantisce che non esistano isole isolate o cicli separati, simmetria, per grafi non orientati, e costo, che viene minimizzato
 
-Successivamente, si identificano quali $x_{i,j}$ sono stati impostati a $1$ dal modello e viene ricostruito il cammino tramite il vettore dei predecessori fornito da Dijkstra
+Successivamente, si identificano quali $x_{i,j}$ sono stati impostati a $1$ dal modello e viene ricostruito il cammino tramite il vettore dei predecessori fornito da Dijkstra.
+
+ La complessità totale è $O\left(K^2\cdot (V+E) \cdot \log(V) + \text{costo SMT solver}\right)$.
 
  ### Algoritmo per il Matching Ottimo
 
@@ -80,11 +82,26 @@ Successivamente, si identificano quali $x_{i,j}$ sono stati impostati a $1$ dal 
    - **Vincoli**: ogni nodo deve essere accoppiato con esattamente un altro nodo dispari e Z3 cerca la combinazione di coppie che minimizza la somma dei pesi.
 
  Dopo aver deciso le coppie di nodi migliori il codice recupera il cammino minimo reale tra i due nodi usando ```padri_matrice``` e per ogni arco che compone quel cammino, viene aggiunta una copia dell'arco nella lista di adiacenza ```adj```, marcato come necessario.
+
+ La complessità totale è $O\left(K\cdot (V+E) \cdot \log(V) + \text{costo SMT solver}\right)$.
  
  ### Algoritmo di EndPairing
 
  Il file ```EndPairing.cpp``` contiene l'implementazione dell'**Algoritmo di Hierholzer** per l'EndPairing. 
- L'algoritmo di Hierholzer è estremamente efficiente perché "tocca" ogni nodo e ogni arco una sola volta durante la costruzione del circuito.
- Ha complessità computazionale pari a $O(E+V)$.
+ 
+L'algoritmo segue una logica simile a quella che adotta l'algoritmo **Depth-First Search (DFS)**. All'interno del ciclo ```while```, il codice estrae l'ultimo arco disponibile per il nodo corrente ```u``` utilizzando ```adj[u].back()``` e lo rimuove immediatamente con ```pop_back()```, in modo tale da evitare eventuali cicli infiniti sullo stesso arco.
 
+L'algoritmo applica due controlli:
+
+- saltare gli archi non necessari tramite ```!next.necessario```
+
+- evita di ripercorrere un arco già utilizzato in una chiamata precedente tramite ```archi_visitati[next.id]```
+
+Quando l'algoritmo trova un nodo che non ha archi da visistare lo aggiunge a ```circuito``` e viene aggiornato il peso del percorso.
+
+La complessità temporale è $O\left(V+E\right)$ e quella spaziale è $O\left(V+E\right)$.
+
+## Dettagli implementativi
+
+Per la risoluzione delle problematiche di ottimizzazione vincolata (come il Matching Ottimo e la connessione delle componenti), il progetto adotta la libreria esterna **Z3 Theorem Prover** di Microsoft Research. Tutte le definizioni delle strutture dati e le firme delle funzioni sono centralizzate nel file ```header.h```. La compilazione del sistema è gestita tramite un Makefile dedicato: utilizzando il comando ```make postino.o```, verrà generato l'eseguibile a partire dal file ```main.cpp```, garantendo un processo di build rapido e riproducibile.
 
