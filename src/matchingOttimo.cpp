@@ -48,7 +48,7 @@ vector<vector<Arco>> MatchingOttimo(int N, vector<vector<Arco>> adj) {
         }
     }
 
-    // Implementazione Z3 (Constraint Programming)
+    // Z3 
     context c;
     optimize opt(c);
 
@@ -165,5 +165,6 @@ vector<vector<Arco>> MatchingOttimo(int N, vector<vector<Arco>> adj) {
     // Ritorna il grafo
     return adj;
 }
+
 
 
