@@ -69,9 +69,7 @@ int main(void) {
         max_id = i;
     }
 
-    // -----------------------------------------------------------
     // FASE 1: Identificazione delle Componenti (Zone Sconnesse)
-    // -----------------------------------------------------------
     std::cout << rosso << "\nFase 1: Identificazione delle Componenti" << reset << std::endl;
 
     vector<Circuit> isole;
@@ -97,25 +95,19 @@ int main(void) {
     }
     cout << "Trovate " << isole.size() << " isole sconnesse." << endl;
 
-    // -----------------------------------------------------------
     // FASE 2: Connessione delle Componenti (MST con Z3)
-    // -----------------------------------------------------------
     std::cout << rosso << "\nFase 2: Connessione delle Componenti" << reset << std::endl;
 
     // Questa funzione aggiungerà ponti required
     grafo_locale = connectComponentsZ3(N, grafo_locale, isole);
 
-    // -----------------------------------------------------------
     // FASE 3: Matching Ottimo (Parità con Z3)
-    // -----------------------------------------------------------
     std::cout << rosso << "\nFase 3: Matching Ottimo" << reset << std::endl;
 
     // Questa funzione (dal tuo file MatchingOttimo.cpp) renderà il grafo Euleriano
     grafo_locale = MatchingOttimo(N, grafo_locale);
 
-    // -----------------------------------------------------------
     // FASE 4: Trova il Circuito Euleriano (Hierholzer)
-    // -----------------------------------------------------------
     std::cout << rosso << "\nFase 4: Individuazione del Circuito Euleriano" << reset << std::endl;
 
     adj = grafo_locale; 
@@ -153,9 +145,7 @@ int main(void) {
     // Lancia l'algoritmo
     endPairingNO(start_node);
     
-    // -----------------------------------------------------------
     // OUTPUT FINALE
-    // -----------------------------------------------------------
     std::cout << rosso << "\n=== RISULTATO ===" << reset << endl;
 
     cout << "Percorso: ";
